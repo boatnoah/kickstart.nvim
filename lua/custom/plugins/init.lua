@@ -95,7 +95,6 @@ return {
       vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
     end,
   },
-  -- chezmoi should pull from the kickstart repo
   {
     'ThePrimeagen/vim-be-good',
   },
