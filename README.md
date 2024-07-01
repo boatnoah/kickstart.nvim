@@ -57,7 +57,7 @@ fork to your machine using one of the commands below, depending on your OS.
 
 > **NOTE**
 > Your fork's url will be something like this:
-> `https://github.com/<your_github_username>/kickstart.nvim.git`
+> `https://github.com/boatnoah/kickstart.nvim.git`
 
 #### Clone kickstart.nvim
 > **NOTE**
