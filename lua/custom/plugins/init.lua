@@ -69,6 +69,11 @@ return {
         view_options = {
           show_hidden = true,
         },
+        keymaps = {
+          ['<CR>'] = 'actions.select',
+          ['<C-p>'] = 'actions.preview',
+        },
+        use_default_keymaps = false,
       }
       vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
     end,
@@ -106,6 +111,14 @@ return {
       end)
       vim.keymap.set('n', '<leader>4', function()
         harpoon:list():select(4)
+      end)
+
+      -- Toggle previous & next buffers stored within Harpoon list
+      vim.keymap.set('n', '<leader>p', function()
+        harpoon:list():prev()
+      end)
+      vim.keymap.set('n', '<leader>n', function()
+        harpoon:list():next()
       end)
     end,
   },
