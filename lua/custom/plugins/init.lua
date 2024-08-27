@@ -33,7 +33,11 @@ return {
 
       -- Center the header (cat ASCII art)
       local header = {
-        '          ⟋|､         ',
+        '                       ',
+        '                       ',
+        '                       ',
+        '                       ',
+        '          ⟋|､          ',
         '         (°､ ｡ 7       ',
         '         |､  ~ヽ       ',
         '         じしf_,)〳    ',
@@ -46,16 +50,6 @@ return {
       dashboard.section.buttons.val = {
         dashboard.button('f f', '  Find Files', ':Telescope find_files<CR>'),
         dashboard.button('f w', '  Find Word', ':Telescope live_grep<CR>'),
-      }
-
-      -- Set up the config
-      dashboard.config.layout = {
-        { type = 'padding', val = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) } },
-        dashboard.section.header,
-        { type = 'padding', val = 5 },
-        dashboard.section.buttons,
-        { type = 'padding', val = 3 },
-        dashboard.section.footer,
       }
 
       alpha.setup(dashboard.config)
@@ -120,6 +114,73 @@ return {
       vim.keymap.set('n', '<leader>n', function()
         harpoon:list():next()
       end)
+    end,
+  },
+
+  {
+    'MeanderingProgrammer/markdown.nvim',
+    main = 'render-markdown',
+    opts = {},
+    name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+  },
+
+  {
+    'epwalsh/obsidian.nvim',
+    version = '*',
+    lazy = true,
+    ft = 'markdown',
+    event = {
+      'BufReadPre ' .. vim.fn.expand '~' .. '/obsidian-vault/*.md',
+      'BufNewFile ' .. vim.fn.expand '~' .. '/obsidian-vault/*.md',
+    },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {
+      ui = { enable = false },
+      disable_frontmatter = true,
+      workspaces = {
+        {
+          name = 'personal',
+          path = '~/obsidian-vault/',
+        },
+        {
+          name = 'blog',
+          path = '~/Developer/CECS404/',
+        },
+      },
+      templates = {
+        folder = 'templates',
+      },
+    },
+  },
+  {
+    'folke/zen-mode.nvim',
+    opts = {},
+  },
+  {
+    'folke/twilight.nvim',
+    opts = {},
+  },
+
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
+    config = function()
+      require('typescript-tools').setup {
+        on_attach = function(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end,
+        settings = {
+          jsx_close_tag = {
+            enable = true,
+            filetypes = { 'javascriptreact', 'typescriptreact', 'typescript', 'javascript' },
+          },
+        },
+      }
     end,
   },
 }
